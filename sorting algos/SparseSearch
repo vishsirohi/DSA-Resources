@@ -1,0 +1,35 @@
+#include<iostream>
+#include<vector>
+#include<utility>
+#include<string.h>
+#include<unordered_map>
+using namespace std;
+int UpdateMid(vector<string> arr , int mid){
+    int left = mid - 1 , right = mid + 1;
+    while ( ( left >= 0 ) && ( right < arr.size() ) ){
+        if( arr[left] != " ") return left;
+        else if ( arr[right] != " ") return right;
+        left--;
+        right++;
+    }
+    return -1;
+}
+
+int SparseSearch(vector<string> arr , string str){
+     
+     int i = 0 , j = arr.size() - 1;
+     while( i <= j){
+        int mid = ( i + j )/2;
+        if ( arr[mid] == " ") mid = UpdateMid(arr , mid);
+        if( mid == -1) return -1;
+        if( arr[mid] == str ) return mid;
+        else if ( arr[mid] > str) j = mid - 1;
+        else i = mid + 1;
+     }
+     return -1;
+}
+int main (){
+    vector<string> arr = { "ab" , " " , " " , "bat" , "cat" , " " , " " , "dog"};
+    cout<<SparseSearch(arr, "ab");
+    return 0;
+}
